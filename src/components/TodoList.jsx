@@ -9,6 +9,11 @@ const TodoList = () => {
         setTodoList(response.data);
     };
 
+    const deleteTodo = (pk) => {
+        TodoBackend.deleteTodo(pk);
+        setTodoList(todoList.filter(todo => todo.pk !== pk));
+    };
+
     useEffect(
         () => {
             fetchTodoList();
@@ -44,7 +49,7 @@ const TodoList = () => {
                                     <td>
                                         <button
                                             className="btn btn-danger btn-sm"
-                                            onClick={() => console.log("it deleted!")}
+                                            onClick={() => deleteTodo(todo.pk)}
                                         >
                                             Delete
                                         </button>

@@ -11,6 +11,13 @@ export default class TodoService {
         return response;
     }
 
+    static async deleteTodo(pk) {
+        const response = await axios.delete(
+            `${todoBackendHost}${todoBackendEndpoints.deleteTodo}/${pk}`
+        );
+        return response;
+    }
+
     static async getTodoList() {
 
         const response = await axios.get(
