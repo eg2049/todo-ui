@@ -25,4 +25,14 @@ export default class TodoService {
         );
         return response;
     }
+
+    static async toggleTodo(todo) {
+        todo.done = !todo.done;
+
+        const response = await axios.put(
+            `${todoBackendHost}${todoBackendEndpoints.toggleTodo}${todo.pk}/`,
+            todo
+        );
+        return response;
+    }
 }

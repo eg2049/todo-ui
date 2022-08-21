@@ -14,6 +14,10 @@ const TodoList = () => {
         setTodoList(todoList.filter(todo => todo.pk !== pk));
     };
 
+    const toggleTodo = (todo) => {
+        TodoBackend.toggleTodo(todo);
+    };
+
     useEffect(
         () => {
             fetchTodoList();
@@ -43,7 +47,7 @@ const TodoList = () => {
                                         <input
                                             type="checkbox"
                                             defaultChecked={todo.done}
-                                            onChange={() => console.log("it changed!")}
+                                            onChange={() => toggleTodo(todo)}
                                         />
                                     </td>
                                     <td>

@@ -24,5 +24,6 @@ export const todoBackendEndpoints = {
     // todo
     addTodo: "/api/v2/todo/",
     deleteTodo: "/api/v2/todo",
-    getTodoList: "/api/v2/todo"
+    getTodoList: "/api/v2/todo",
+    toggleTodo: "/api/v2/todo/"
 };
