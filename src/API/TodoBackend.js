@@ -1,7 +1,7 @@
 import axios from "axios";
 import { todoBackendEndpoints, todoBackendHost } from "../config";
 
-export default class TodoService {
+export default class TodoBackend {
 
     static async addTodo(todo) {
         const response = await axios.post(

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TodoService from "../API/TodoBackend";
+import TodoBackend from "../API/TodoBackend";
 
 const TodoForm = () => {
     const [todo, setTodo] = useState(
@@ -10,7 +10,7 @@ const TodoForm = () => {
     );
 
     const addTodo = () => {
-        TodoService.addTodo(todo);
+        TodoBackend.addTodo(todo);
 
         setTodo(
             {
