@@ -3,6 +3,14 @@ import { todoBackendEndpoints, todoBackendHost } from "../config";
 
 export default class TodoService {
 
+    static async addTodo(todo) {
+        const response = await axios.post(
+            `${todoBackendHost}${todoBackendEndpoints.addTodo}`,
+            todo
+        );
+        return response;
+    }
+
     static async getTodoList() {
 
         const response = await axios.get(
