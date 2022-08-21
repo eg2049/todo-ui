@@ -8,7 +8,10 @@ export const applicationHost = "http://localhost:3000";
 // endpoint-ы todo_ui
 export const todoUIEndpoints = {
     // todo
-    getTodoList: '/todos'
+    getTodoList: '/todos',
+
+    // common
+    notFound: '*'
 }
 
 // конфигурация todo_backend
