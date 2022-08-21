@@ -1,12 +1,15 @@
+import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/UI/navbar/Navbar";
-import TodoList from "./components/TodoList";
+import TodoRouter from "./components/TodoRouter";
 import "./styles/App.css";
 
 function App() {
     return (
         <div className="container">
-            <Navbar />
-            <TodoList />
+            <BrowserRouter>
+                <Navbar />
+                <TodoRouter />
+            </BrowserRouter>
         </div>
     );
 }

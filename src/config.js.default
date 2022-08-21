@@ -5,5 +5,11 @@ export const localIP = '127.0.0.1';
 // конфигурация todo_ui
 export const applicationHost = "http://localhost:3000";
 
+// endpoint-ы todo_ui
+export const todoUIEndpoints = {
+    // todo
+    getTodoList: '/todos'
+}
+
 // конфигурация todo_backend
 export const todoBackendHost = "http://localhost:8000";
