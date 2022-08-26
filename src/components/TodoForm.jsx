@@ -1,21 +1,33 @@
 import React, { useState } from "react";
+import { authTokenHeadersGet } from "../handlers/authHandler";
 import TodoBackend from "../API/TodoBackend";
 
 const TodoForm = () => {
-    const [todo, setTodo] = useState(
-        {
-            title: "",
-            description: ""
-        }
-    );
+
+    const headers = authTokenHeadersGet();
+
+    const defaultState = {
+        title: "",
+        description: ""
+    }
+
+    const [todo, setTodo] = useState(defaultState);
 
     const addTodo = () => {
-        TodoBackend.addTodo(todo);
-
-        setTodo(
-            {
-                title: "",
-                description: ""
+        TodoBackend.addTodo(
+            headers, todo
+        ).then(
+            response => {
+                if (response.status === 200) {
+                    setTodo(defaultState);
+                }
+                else {
+                    console.log(response);
+                };
+            }
+        ).catch(
+            error => {
+                console.log(error);
             }
         );
     };
