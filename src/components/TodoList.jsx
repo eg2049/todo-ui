@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { authTokenHeadersGet } from "../handlers/authHandler";
+import { authTokenHeadersGet } from "../handlers/authHandlers";
 import TodoBackend from "../API/TodoBackend";
 
 const TodoList = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authTokenName } from "../config";
 import TodoBackend from "../API/TodoBackend";
+import { authTokenSet } from "../handlers/authHandlers";
 import { todoUIEndpoints } from "../config";
 
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
             response => {
                 if (response.status === 200) {
                     const token = response.data.token;
-                    localStorage.setItem(authTokenName, token);
+                    authTokenSet(token);
                     navigate(todoUIEndpoints.main);
                 }
                 else {
