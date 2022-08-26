@@ -17,3 +17,7 @@ export const authTokenSet = (authToken) => {
         localStorage.setItem(authTokenName, authToken);
     };
 };
+
+export const authTokenRemove = () => {
+    localStorage.removeItem(authTokenName);
+};

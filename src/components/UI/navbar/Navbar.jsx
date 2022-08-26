@@ -19,7 +19,7 @@ const Navbar = () => {
                                 <li><a className="dropdown-item" href={todoUIEndpoints.login}>Login</a></li>
                                 <li><a className="dropdown-item" href="#">Registration</a></li>
                                 <li><a className="dropdown-item" href="#">Profile</a></li>
-                                <li><a className="dropdown-item" href="#">Logout</a></li>
+                                <li><a className="dropdown-item" href={todoUIEndpoints.logout}>Logout</a></li>
                             </ul>
                         </li>
                     </ul>

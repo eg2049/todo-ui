@@ -4,10 +4,19 @@ import { todoBackendEndpoints, todoBackendHost } from "../config";
 export default class TodoBackend {
 
     // auth
-    static async authToken(credentials) {
+    static async authTokenGet(credentials) {
         const response = await axios.post(
-            `${todoBackendHost}${todoBackendEndpoints.authToken}`,
+            `${todoBackendHost}${todoBackendEndpoints.authTokenGet}`,
             credentials
+        );
+        return response;
+    }
+
+    static async authTokenRemove(headers = {}) {
+        const response = await axios.post(
+            `${todoBackendHost}${todoBackendEndpoints.authTokenRemove}`,
+            {},
+            { headers: headers }
         );
         return response;
     }

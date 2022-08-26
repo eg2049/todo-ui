@@ -18,7 +18,7 @@ const Login = () => {
     const authTokenGet = (event) => {
         event.preventDefault();
 
-        TodoBackend.authToken(
+        TodoBackend.authTokenGet(
             credentials
         ).then(
             response => {
