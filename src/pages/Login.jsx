@@ -25,7 +25,7 @@ const Login = () => {
                 if (response.status === 200) {
                     const token = response.data.token;
                     localStorage.setItem(authTokenName, token);
-                    navigate(todoUIEndpoints.getTodoList);
+                    navigate(todoUIEndpoints.main);
                 }
                 else {
                     console.log(response);

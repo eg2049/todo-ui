@@ -2,7 +2,7 @@ import React from "react"
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 
-const Todos = () => {
+const Main = () => {
     return (
         <div>
             <TodoForm />
@@ -11,4 +11,4 @@ const Todos = () => {
     );
 };
 
-export default Todos;
+export default Main;
