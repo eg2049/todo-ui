@@ -1,7 +1,10 @@
 import React from "react";
 import { todoUIEndpoints } from "../../../config";
+import { authTokenHeadersGet } from "../../../handlers/authHandlers";
 
 const Navbar = () => {
+    const isAuth = authTokenHeadersGet();
+
     return (
         <nav className="navbar navbar-expand-lg bg-light">
             <div className="container-fluid">
@@ -16,10 +19,18 @@ const Navbar = () => {
                                 Account
                             </a>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href={todoUIEndpoints.login}>Login</a></li>
-                                <li><a className="dropdown-item" href="#">Registration</a></li>
-                                <li><a className="dropdown-item" href="#">Profile</a></li>
-                                <li><a className="dropdown-item" href={todoUIEndpoints.logout}>Logout</a></li>
+                                {isAuth.Authorization
+                                    ?
+                                    <div>
+                                        <li><a className="dropdown-item" href="#">Profile</a></li>
+                                        <li><a className="dropdown-item" href={todoUIEndpoints.logout}>Logout</a></li>
+                                    </div>
+                                    :
+                                    <div>
+                                        <li><a className="dropdown-item" href={todoUIEndpoints.login}>Login</a></li>
+                                        <li><a className="dropdown-item" href="#">Registration</a></li>
+                                    </div>
+                                }
                             </ul>
                         </li>
                     </ul>
