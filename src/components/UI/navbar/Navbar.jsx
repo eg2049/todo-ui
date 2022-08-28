@@ -28,7 +28,7 @@ const Navbar = () => {
                                     :
                                     <div>
                                         <li><a className="dropdown-item" href={todoUIEndpoints.login}>Login</a></li>
-                                        <li><a className="dropdown-item" href="#">Registration</a></li>
+                                        <li><a className="dropdown-item" href={todoUIEndpoints.registration}>Registration</a></li>
                                     </div>
                                 }
                             </ul>

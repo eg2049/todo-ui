@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import TodoBackend from "../API/TodoBackend";
-import { authTokenSet } from "../handlers/authHandlers";
-import { todoUIEndpoints } from "../config";
+import { authTokenGet } from "../handlers/authHandlers";
 
 const Login = () => {
 
@@ -15,32 +13,13 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const authTokenGet = (event) => {
-        event.preventDefault();
-
-        TodoBackend.authTokenGet(
-            credentials
-        ).then(
-            response => {
-                if (response.status === 200) {
-                    const token = response.data.token;
-                    authTokenSet(token);
-                    navigate(todoUIEndpoints.main);
-                }
-                else {
-                    console.log(response);
-                };
-            }
-        ).catch(
-            error => {
-                console.error(error);
-            }
-        );
+    const authStart = (event) => {
+        authTokenGet(event, credentials, navigate);
     };
 
     return (
         <div>
-            <form className="col-3 position-absolute top-50 start-50 translate-middle" onSubmit={authTokenGet}>
+            <form className="col-3 position-absolute top-50 start-50 translate-middle" onSubmit={authStart}>
                 <div className="mb-3">
                     <label className="form-label">
                         Login

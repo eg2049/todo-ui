@@ -21,6 +21,14 @@ export default class TodoBackend {
         return response;
     }
 
+    static async registration(credentials) {
+        const response = await axios.post(
+            `${todoBackendHost}${todoBackendEndpoints.registration}`,
+            credentials
+        );
+        return response;
+    }
+
     // todo
     static async addTodo(headers = {}, todo) {
         const response = await axios.post(
