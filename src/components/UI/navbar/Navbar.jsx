@@ -22,7 +22,7 @@ const Navbar = () => {
                                 {isAuth.Authorization
                                     ?
                                     <div>
-                                        <li><a className="dropdown-item" href="#">Profile</a></li>
+                                        <li><a className="dropdown-item" href={todoUIEndpoints.profile}>Profile</a></li>
                                         <li><a className="dropdown-item" href={todoUIEndpoints.logout}>Logout</a></li>
                                     </div>
                                     :

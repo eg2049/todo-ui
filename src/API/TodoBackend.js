@@ -29,6 +29,15 @@ export default class TodoBackend {
         return response;
     }
 
+    // user
+    static async getProfile(headers = {}) {
+        const response = await axios.get(
+            `${todoBackendHost}${todoBackendEndpoints.profile}`,
+            { headers: headers }
+        );
+        return response;
+    }
+
     // todo
     static async addTodo(headers = {}, todo) {
         const response = await axios.post(

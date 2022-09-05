@@ -22,6 +22,9 @@ export const todoUIEndpoints = {
     logout: "/logout",
     registration: "/registration",
 
+    // user
+    profile: '/profile',
+
     // todo
     main: "/",
 
@@ -44,6 +47,9 @@ export const todoBackendEndpoints = {
     authTokenGet: "/api/v1/auth/token/get/",
     authTokenRemove: "/api/v1/auth/token/remove/",
     registration: "/api/v1/registration/",
+
+    // user
+    profile: "/api/v1/profile",
 
     // todo
     addTodo: "/api/v2/todo/",
