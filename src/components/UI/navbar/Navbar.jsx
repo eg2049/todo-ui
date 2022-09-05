@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { todoUIEndpoints } from "../../../config";
 import { authTokenHeadersGet } from "../../../handlers/authHandlers";
 
@@ -8,7 +9,7 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg bg-light">
             <div className="container-fluid">
-                <a className="navbar-brand" href={todoUIEndpoints.main}>Todo App</a>
+                <Link className="navbar-brand" to={todoUIEndpoints.main}>Todo App</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -22,13 +23,13 @@ const Navbar = () => {
                                 {isAuth.Authorization
                                     ?
                                     <div>
-                                        <li><a className="dropdown-item" href={todoUIEndpoints.profile}>Profile</a></li>
-                                        <li><a className="dropdown-item" href={todoUIEndpoints.logout}>Logout</a></li>
+                                        <li><Link className="dropdown-item" to={todoUIEndpoints.profile}>Profile</Link></li>
+                                        <li><Link className="dropdown-item" to={todoUIEndpoints.logout}>Logout</Link></li>
                                     </div>
                                     :
                                     <div>
-                                        <li><a className="dropdown-item" href={todoUIEndpoints.login}>Login</a></li>
-                                        <li><a className="dropdown-item" href={todoUIEndpoints.registration}>Registration</a></li>
+                                        <li><Link className="dropdown-item" to={todoUIEndpoints.login}>Login</Link></li>
+                                        <li><Link className="dropdown-item" to={todoUIEndpoints.registration}>Registration</Link></li>
                                     </div>
                                 }
                             </ul>
