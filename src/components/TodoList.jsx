@@ -7,6 +7,7 @@ const TodoList = () => {
     const headers = authTokenHeadersGet();
 
     const [todoList, setTodoList] = useState([]);
+    const [search, setSearch] = useState("");
 
     const fetchTodoList = () => {
         TodoBackend.getTodoList(
@@ -24,7 +25,7 @@ const TodoList = () => {
             error => {
                 console.error(error);
             }
-        )
+        );
     };
 
     const deleteTodo = (pk) => {
@@ -62,15 +63,40 @@ const TodoList = () => {
         );
     };
 
+    const searchProcessing = (event) => {
+        event.preventDefault();
+
+        const titleTodos = todoList.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
+        const descriptionTodos = todoList.filter(todo => todo.description.toLowerCase().includes(search.toLowerCase()));
+        const concatTodos = [...titleTodos, ...descriptionTodos];
+
+        setTodoList(
+            [...new Set(concatTodos)]
+        );
+    };
+
     useEffect(
         () => {
             fetchTodoList();
-        }, []
+        }, [search]
     );
 
     return (
         <div>
             <h2>Todo List</h2>
+            <form className="d-flex" role="search" onSubmit={searchProcessing}>
+                <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    value={search}
+                    onChange={event =>
+                        setSearch(event.target.value)
+                    }
+                />
+                <button className="btn btn-outline-success" type="submit">Search</button>
+            </form>
             <table className="table table-striped">
                 <thead>
                     <tr>

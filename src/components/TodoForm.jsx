@@ -9,7 +9,7 @@ const TodoForm = () => {
     const defaultState = {
         title: "",
         description: ""
-    }
+    };
 
     const [todo, setTodo] = useState(defaultState);
 
