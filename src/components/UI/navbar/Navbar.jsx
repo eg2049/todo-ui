@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { todoUIEndpoints } from "../../../config";
-import { authTokenHeadersGet } from "../../../handlers/authHandlers";
+import { authDispatch } from "../../../handlers/authHandlers";
 
 const Navbar = () => {
-    const isAuth = authTokenHeadersGet();
+    const dispatch = useDispatch();
+
+    const isAuth = useSelector(state => state.isAuth.isAuth);
+
+    useEffect(
+        () => {
+            authDispatch(dispatch);
+        }, []
+    );
 
     return (
         <nav className="navbar navbar-expand-lg bg-light">
@@ -20,7 +29,7 @@ const Navbar = () => {
                                 Account
                             </a>
                             <ul className="dropdown-menu">
-                                {isAuth.Authorization
+                                {isAuth
                                     ?
                                     <div>
                                         <li><Link className="dropdown-item" to={todoUIEndpoints.profile}>Profile</Link></li>

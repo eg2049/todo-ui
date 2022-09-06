@@ -1,14 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
-import { authTokenHeadersGet } from "../handlers/authHandlers";
 
 const Main = () => {
-    const isAuth = authTokenHeadersGet();
+    const isAuth = useSelector(state => state.isAuth.isAuth);
 
     return (
         <div>
-            {isAuth.Authorization
+            {isAuth
                 ?
                 <div>
                     <TodoForm />

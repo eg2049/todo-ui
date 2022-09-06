@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authTokenHeadersGet, authTokenRemove } from "../handlers/authHandlers";
+import { useDispatch } from "react-redux";
+import { authDispatch, authTokenHeadersGet, authTokenRemove } from "../handlers/authHandlers";
 import TodoBackend from "../API/TodoBackend";
 import { todoUIEndpoints } from "../config";
 
 const Logout = () => {
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(
@@ -16,6 +19,7 @@ const Logout = () => {
                 response => {
                     if (response.status === 200) {
                         authTokenRemove();
+                        authDispatch(dispatch);
                         navigate(todoUIEndpoints.login);
                     }
                     else {

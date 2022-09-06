@@ -1,7 +1,8 @@
+import { setAuthAction } from "../reducers/authReducer";
 import TodoBackend from "../API/TodoBackend";
 import { authTokenName, authTokenPrefix, todoUIEndpoints } from "../config";
 
-export const authTokenGet = (event, credentials, navigate) => {
+export const authTokenGet = (event, credentials, dispatch, navigate) => {
     event.preventDefault();
 
     TodoBackend.authTokenGet(
@@ -11,6 +12,7 @@ export const authTokenGet = (event, credentials, navigate) => {
             if (response.status === 200) {
                 const token = response.data.token;
                 authTokenSet(token);
+                dispatch(setAuthAction(true))
                 navigate(todoUIEndpoints.main);
             }
             else {
@@ -24,7 +26,7 @@ export const authTokenGet = (event, credentials, navigate) => {
     );
 };
 
-export const registration = (event, credentials, navigate) => {
+export const registration = (event, credentials, dispatch, navigate) => {
     event.preventDefault();
 
     TodoBackend.registration(
@@ -32,7 +34,7 @@ export const registration = (event, credentials, navigate) => {
     ).then(
         response => {
             if (response.status === 201) {
-                authTokenGet(event, credentials, navigate)
+                authTokenGet(event, credentials, dispatch, navigate)
             }
             else {
                 console.log(response);
@@ -40,8 +42,7 @@ export const registration = (event, credentials, navigate) => {
         }
     ).catch(
         error => {
-            console.log(error);
-            console.log(error.response.data)
+            console.error(error);
         }
     )
 };
@@ -66,4 +67,15 @@ export const authTokenSet = (authToken) => {
 
 export const authTokenRemove = () => {
     localStorage.removeItem(authTokenName);
+};
+
+export const authDispatch = (dispatch) => {
+    const headers = authTokenHeadersGet();
+
+    {
+        headers.Authorization
+            ? dispatch(setAuthAction(true))
+            : dispatch(setAuthAction(false))
+    };
+
 };
