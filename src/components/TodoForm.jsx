@@ -33,7 +33,7 @@ const TodoForm = () => {
     };
 
     return (
-        <div className="card card-body mt-4 mb-4">
+        <div className="card card-body mb-4">
             <h2>Add Todo</h2>
             <form onSubmit={() => addTodo()}>
                 <div className="form-group">
