@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { authTokenHeadersGet } from "../handlers/authHandlers";
 import TodoBackend from "../API/TodoBackend";
+import TodoFilter from "./TodoFilter";
 
 const TodoList = () => {
 
     const headers = authTokenHeadersGet();
 
-    const [todoList, setTodoList] = useState([]);
-    const [search, setSearch] = useState("");
+    const [todoList, setTodoList] = useState(
+        {
+            full: [],
+            searched: []
+        }
+    );
+
+    const [searchQuery, setSearchQuery] = useState("");
 
     const fetchTodoList = () => {
         TodoBackend.getTodoList(
@@ -15,7 +22,9 @@ const TodoList = () => {
         ).then(
             response => {
                 if (response.status === 200) {
-                    setTodoList(response.data);
+                    setTodoList(
+                        { ...todoList, full: response.data, searched: response.data }
+                    );
                 }
                 else {
                     console.log(response);
@@ -34,7 +43,13 @@ const TodoList = () => {
         ).then(
             response => {
                 if (response.status === 204) {
-                    setTodoList(todoList.filter(todo => todo.pk !== pk));
+                    setTodoList(
+                        {
+                            ...todoList,
+                            full: todoList.full.filter(todo => todo.pk !== pk),
+                            searched: todoList.searched.filter(todo => todo.pk !== pk)
+                        }
+                    );
                 }
                 else {
                     console.log(response);
@@ -63,40 +78,36 @@ const TodoList = () => {
         );
     };
 
-    const searchProcessing = (event) => {
-        event.preventDefault();
+    const searchTodo = (todos, query) => {
 
-        const titleTodos = todoList.filter(todo => todo.title.toLowerCase().includes(search.toLowerCase()));
-        const descriptionTodos = todoList.filter(todo => todo.description.toLowerCase().includes(search.toLowerCase()));
+        const titleTodos = todos.filter(todo => todo.title.toLowerCase().includes(query.toLowerCase()));
+        const descriptionTodos = todos.filter(todo => todo.description.toLowerCase().includes(query.toLowerCase()));
         const concatTodos = [...titleTodos, ...descriptionTodos];
 
-        setTodoList(
-            [...new Set(concatTodos)]
-        );
+        return [...new Set(concatTodos)];
     };
 
     useEffect(
         () => {
             fetchTodoList();
-        }, [search]
+        }, []
+    );
+
+    useEffect(
+        () => {
+            const searchResult = searchTodo(todoList.full, searchQuery)
+            setTodoList(
+                { ...todoList, searched: searchResult }
+            )
+        }, [searchQuery]
     );
 
     return (
         <div>
             <h2>Todo List</h2>
-            <form className="d-flex" role="search" onSubmit={searchProcessing}>
-                <input
-                    className="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                    value={search}
-                    onChange={event =>
-                        setSearch(event.target.value)
-                    }
-                />
-                <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+
+            <TodoFilter filter={searchQuery} setFilter={setSearchQuery} />
+
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -108,7 +119,7 @@ const TodoList = () => {
                 </thead>
                 <tbody>
                     {
-                        todoList.map(
+                        todoList.searched.map(
                             todo =>
                                 <tr key={todo.pk}>
                                     <td>{todo.title}</td>
