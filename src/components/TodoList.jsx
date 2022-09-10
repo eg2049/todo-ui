@@ -3,10 +3,10 @@ import React from "react";
 const TodoList = ({ todos, toggle, remove }) => {
 
     return (
-        <div className="mb-4">
+        <div className="min-vh-100 mb-4">
             <h2>Todo List</h2>
 
-            {todos.searched.length
+            {todos.paginated.length
                 ?
                 <table className="table table-striped">
                     <thead>
@@ -19,7 +19,7 @@ const TodoList = ({ todos, toggle, remove }) => {
                     </thead>
                     <tbody>
                         {
-                            todos.searched.map(
+                            todos.paginated.map(
                                 todo =>
                                     <tr key={todo.pk}>
                                         <td>{todo.title}</td>

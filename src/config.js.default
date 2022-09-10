@@ -10,9 +10,23 @@ export const localIP = "127.0.0.1";
 // todo-ui
 // ----------------------------------------------------------------------------------------------------------------------
 
-// конфигурация todo_ui
+// хост на котором запущен todo_ui
 export const applicationHost = "http://localhost:3000";
+
+// название для токена аутентификации помещаемого в localStorage
 export const authTokenName = "authToken";
+
+// лимит записей на странице
+export const todosOnPageLimit = 10;
+
+// лимит отображаемых страниц в пагинации
+export const paginationPagesLimit = 10;
+
+// максимальное количество страниц в пагинации отображаемых слева от текущей
+export const leftPagintionLimit = 5;
+
+// максимальное количество страниц в пагинации отображаемых справа от текущей
+export const rightPaginationLimit = 4;
 
 // endpoint-ы todo_ui
 export const todoUIEndpoints = {
@@ -36,8 +50,10 @@ export const todoUIEndpoints = {
 // todo-backend
 // ----------------------------------------------------------------------------------------------------------------------
 
-// конфигурация todo_backend
+// хост на котором запущен todo_backend
 export const todoBackendHost = "http://localhost:8000";
+
+// префикс для токена аутентификации принимаемого todo_backend
 export const authTokenPrefix = "Token";
 
 // endpoint-ы todo_backend

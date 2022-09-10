@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Pagination from "../components/Pagination";
 import TodoFilter from "../components/TodoFilter";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import TodoBackend from "../API/TodoBackend";
 import { authTokenHeadersGet } from "../handlers/authHandlers";
+import { getPageCount } from "../utils/pages";
+import { todosOnPageLimit } from "../config";
 
 const Main = () => {
+
     const isAuth = useSelector(state => state.isAuth.isAuth);
 
     const [todoList, setTodoList] = useState(
         {
             full: [],
+            paginated: [],
             searched: []
         }
     );
 
     const [searchQuery, setSearchQuery] = useState("");
+
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     const fetchTodoList = () => {
         const headers = authTokenHeadersGet();
@@ -26,8 +34,13 @@ const Main = () => {
         ).then(
             response => {
                 if (response.status === 200) {
+
+                    const totalCount = response.data.length;
+
+                    setTotalPages(getPageCount(totalCount, todosOnPageLimit));
+
                     setTodoList(
-                        { ...todoList, full: response.data, searched: response.data }
+                        { ...todoList, full: response.data, paginated: response.data.slice(0, todosOnPageLimit) }
                     );
                 }
                 else {
@@ -53,6 +66,7 @@ const Main = () => {
                         {
                             ...todoList,
                             full: todoList.full.filter(todo => todo.pk !== pk),
+                            paginated: todoList.paginated.filter(todo => todo.pk !== pk),
                             searched: todoList.searched.filter(todo => todo.pk !== pk)
                         }
                     );
@@ -94,6 +108,26 @@ const Main = () => {
         return [...new Set(concatTodos)];
     };
 
+    const changePage = (page) => {
+        setPage(page);
+
+        const newLimitTo = todosOnPageLimit * page;
+        const newLimitFrom = newLimitTo - todosOnPageLimit;
+
+        let newPaginated = [];
+
+        if (todoList.searched.length) {
+            newPaginated = todoList.searched.slice(newLimitFrom, newLimitTo);
+        }
+        else {
+            newPaginated = todoList.full.slice(newLimitFrom, newLimitTo);
+        };
+
+        setTodoList(
+            { ...todoList, paginated: newPaginated }
+        );
+    };
+
     useEffect(
         () => {
             const headers = authTokenHeadersGet();
@@ -106,10 +140,21 @@ const Main = () => {
     useEffect(
         () => {
             if (isAuth) {
-                const searchResult = searchTodo(todoList.full, searchQuery);
+                let searchResult = searchTodo(todoList.full, searchQuery);
+
+                if (!searchQuery) {
+                    searchResult = todoList.full.slice(0, todosOnPageLimit);
+                    setTotalPages(getPageCount(todoList.full.length, todosOnPageLimit));
+                }
+                else {
+                    setTotalPages(getPageCount(searchResult.length, todosOnPageLimit));
+                };
+
                 setTodoList(
-                    { ...todoList, searched: searchResult }
+                    { ...todoList, searched: searchResult, paginated: searchResult.slice(0, todosOnPageLimit) }
                 );
+
+                setPage(1);
             };
         }, [searchQuery]
     );
@@ -121,7 +166,9 @@ const Main = () => {
                 <div>
                     <TodoForm />
                     <TodoFilter filter={searchQuery} setFilter={setSearchQuery} />
+
                     <TodoList todos={todoList} toggle={toggleTodo} remove={deleteTodo} />
+                    <Pagination totalPages={totalPages} page={page} changePage={changePage} />
                 </div>
                 :
                 <h3 className="position-absolute top-50 start-50 translate-middle">
