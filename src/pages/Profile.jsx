@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import TodoBackend from "../API/TodoBackend";
-import { authTokenHeadersGet } from "../handlers/authHandlers";
+import TodoBackend from "@API/TodoBackend";
+import { authTokenHeadersGet } from "@handlers/authHandlers";
 
 const Profile = () => {
     const headers = authTokenHeadersGet();

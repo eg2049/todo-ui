@@ -1,6 +1,6 @@
-import { setAuthAction } from "../reducers/authReducer";
-import TodoBackend from "../API/TodoBackend";
-import { authTokenName, authTokenPrefix, todoUIEndpoints } from "../config";
+import { setAuthAction } from "@reducers/authReducer";
+import TodoBackend from "@API/TodoBackend";
+import { authTokenName, authTokenPrefix, todoUIEndpoints } from "@config/config";
 
 export const authTokenGet = (event, credentials, dispatch, navigate) => {
     event.preventDefault();

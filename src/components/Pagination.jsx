@@ -1,6 +1,6 @@
 import React from "react";
-import { getPagesArray, getPaginationCurrentBorders } from "../utils/pages";
-import { paginationPagesLimit, leftPagintionLimit, rightPaginationLimit } from "../config";
+import { getPagesArray, getPaginationCurrentBorders } from "@utils/pages";
+import { paginationPagesLimit, leftPagintionLimit, rightPaginationLimit } from "@config/config";
 
 const Pagination = ({ totalPages, page, changePage }) => {
 

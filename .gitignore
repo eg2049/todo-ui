@@ -5,7 +5,7 @@ config.js
 
 # dependencies
 /node_modules
-/.pnp
+.pnp/
 .pnp.js
 
 # testing
@@ -13,6 +13,10 @@ config.js
 
 # production
 /build
+/dist
+
+# webpack-bundle-analyzer
+stats.json
 
 # misc
 .DS_Store
@@ -25,8 +29,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# JetBrains
-.idea
+# Jetbrains IDEA
+.idea/
 
-# VsCode
-.vscode
+# VSCode
+.vscode/

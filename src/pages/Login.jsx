@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authTokenGet } from "../handlers/authHandlers";
+import { authTokenGet } from "@handlers/authHandlers";
 
 const Login = () => {
 

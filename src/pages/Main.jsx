@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Pagination from "../components/Pagination";
-import TodoFilter from "../components/TodoFilter";
-import TodoForm from "../components/TodoForm";
-import TodoList from "../components/TodoList";
-import TodoBackend from "../API/TodoBackend";
-import { authTokenHeadersGet } from "../handlers/authHandlers";
-import { getPageCount } from "../utils/pages";
-import { todosOnPageLimit } from "../config";
+import Pagination from "@components/Pagination";
+import TodoFilter from "@components/TodoFilter";
+import TodoForm from "@components/TodoForm";
+import TodoList from "@components/TodoList";
+import TodoBackend from "@API/TodoBackend";
+import { authTokenHeadersGet } from "@handlers/authHandlers";
+import { getPageCount } from "@utils/pages";
+import { todosOnPageLimit } from "@config/config";
 
 const Main = () => {
 

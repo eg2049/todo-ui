@@ -17,7 +17,7 @@ export const applicationHost = "http://localhost:3000";
 export const authTokenName = "authToken";
 
 // лимит записей на странице
-export const todosOnPageLimit = 10;
+export const todosOnPageLimit = 20;
 
 // лимит отображаемых страниц в пагинации
 export const paginationPagesLimit = 10;
@@ -51,7 +51,7 @@ export const todoUIEndpoints = {
 // ----------------------------------------------------------------------------------------------------------------------
 
 // хост на котором запущен todo_backend
-export const todoBackendHost = "http://localhost:8000";
+export const todoBackendHost = "http://localhost:8888";
 
 // префикс для токена аутентификации принимаемого todo_backend
 export const authTokenPrefix = "Token";

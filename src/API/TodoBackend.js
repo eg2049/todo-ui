@@ -1,5 +1,5 @@
 import axios from "axios";
-import { todoBackendEndpoints, todoBackendHost } from "../config";
+import { todoBackendEndpoints, todoBackendHost } from "@config/config";
 
 export default class TodoBackend {
 

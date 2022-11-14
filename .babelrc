@@ -1,0 +1,14 @@
+{
+    // preset-ы для сборки .js & .jsx приложения
+    "presets": [
+        "@babel/preset-env",
+        [
+            "@babel/preset-react",
+            {
+                // без этого параметра не собирается
+                "runtime": "automatic"
+            }
+        ]
+    ],
+    "plugins": []
+}

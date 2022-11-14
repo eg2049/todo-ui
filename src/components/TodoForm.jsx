@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { authTokenHeadersGet } from "../handlers/authHandlers";
-import TodoBackend from "../API/TodoBackend";
+import { authTokenHeadersGet } from "@handlers/authHandlers";
+import TodoBackend from "@API/TodoBackend";
 
 const TodoForm = () => {
 

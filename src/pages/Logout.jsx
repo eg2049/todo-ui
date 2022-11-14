@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authDispatch, authTokenHeadersGet, authTokenRemove } from "../handlers/authHandlers";
-import TodoBackend from "../API/TodoBackend";
-import { todoUIEndpoints } from "../config";
+import { authDispatch, authTokenHeadersGet, authTokenRemove } from "@handlers/authHandlers";
+import TodoBackend from "@API/TodoBackend";
+import { todoUIEndpoints } from "@config/config";
 
 const Logout = () => {
 
