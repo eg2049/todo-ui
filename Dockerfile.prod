@@ -1,0 +1,57 @@
+# получение образа node
+# build - это название ШАГА, в консоли можно передать docker build с флагом --target build
+# тогда все шаги которые идут после переданного шага выполняться не будут
+FROM node:19.0.1-buster AS build
+
+# создание рабочей директории в контейнере
+RUN mkdir /app
+
+# установка рабочей директории в контейнере
+WORKDIR /app
+
+# добавление проекта в рабочую директорию контейнера
+ADD . /app/
+
+# создание файла конфигурации приложения
+# config.js.default предварительно должен быть корректно заполнен
+RUN cp /app/config/config.js.default /app/config/config.js
+
+# обновление npm
+RUN npm install -g npm@9.1.1 --silent
+
+# установка зависимостей проекта
+RUN npm install --silent
+
+# # получение переменных переданных в docker-compose.yaml build args
+# ARG ARG_FROM_DOCKER_COMPOSE
+
+# # объявление переменных в контейнере до сборки исходников приложения
+# ENV ARG_FROM_DOCKER_COMPOSE = $ARG_FROM_DOCKER_COMPOSE
+
+# сборка приложения
+RUN npm run build
+
+# получение образа nginx
+# ВАЖНО: все переменные, передаваемые в docker-compose.yaml enviroments, попадают в контейнер с nginx, а не в контейнер с node, 
+# чтобы переменные были видны в image node, и код можно было билдить с ними, 
+# переменные нужно передавать через docker-compose.yams build args
+FROM nginx:1.22.0
+
+# копирование собранного приложения их шага build в контейнер с nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# копирование файла конфигурации nginx из шага build в контейнер с nginx (перезатирание файла)
+# COPY --from=build /app/nginx.conf /etc/nginx/nginx.conf
+
+# создание папки для хранения конфигов сайтов
+RUN mkdir /etc/nginx/sites-available/
+
+# создание папки для "линкования" туда уже созданных файлов
+# т.е. не добавлять / удалять, а на уровне симлинков включать / выключать сайты
+RUN mkdir /etc/nginx/sites-enabled/
+
+# "линкование" конфига из доступных сайтов во включённые сайты
+RUN ln -s /etc/nginx/sites-available/todo.org.conf /etc/nginx/sites-enabled/
+
+# ...
+CMD ["nginx", "-g", "daemon off;"]

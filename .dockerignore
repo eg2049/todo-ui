@@ -1,0 +1,29 @@
+# Docker stuff
+Dockerfile*
+.dockerignore
+
+# configuration
+config/config.js
+
+# Git
+.git/
+.gitignore
+
+# project
+README.md
+
+# dependencies
+/node_modules
+
+# production
+/build
+/dist
+
+# webpack-bundle-analyzer
+stats.json
+
+# Jetbrains IDEA
+.idea/
+
+# VSCode
+.vscode/

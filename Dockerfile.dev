@@ -1,0 +1,20 @@
+# получение образа node
+FROM node:19.0.1-buster
+
+# создание рабочей директории в контейнере
+RUN mkdir /app
+
+# установка рабочей директории в контейнере
+WORKDIR /app
+
+# добавление проекта в рабочую директорию контейнера
+ADD . /app/
+
+# обновление npm
+RUN npm install -g npm@9.1.1 --silent
+
+# установка зависимостей проекта
+RUN npm install --silent
+
+# запуск приложения
+CMD HOST=$HOST PORT=$PORT WDS_SOCKET_PORT=$WDS_SOCKET_PORT npm start
