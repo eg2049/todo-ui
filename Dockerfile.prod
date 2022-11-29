@@ -17,7 +17,7 @@ ADD . /app/
 RUN cp /app/config/config.js.default /app/config/config.js
 
 # обновление npm
-RUN npm install -g npm@9.1.1 --silent
+RUN npm install -g npm@9.1.2 --silent
 
 # установка зависимостей проекта
 RUN npm install --silent
