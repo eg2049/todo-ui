@@ -50,7 +50,7 @@ export default class TodoBackend {
 
     static async deleteTodo(headers = {}, pk) {
         const response = await axios.delete(
-            `${todoBackendHost}${todoBackendEndpoints.deleteTodo}/${pk}`,
+            `${todoBackendHost}${todoBackendEndpoints.deleteTodo}${pk}/`,
             { headers: headers }
         );
         return response;
