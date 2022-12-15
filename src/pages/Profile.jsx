@@ -1,31 +1,47 @@
 import React, { useEffect, useState } from "react";
-import TodoBackend from "@API/TodoBackend";
 import { authTokenHeadersGet } from "@handlers/authHandlers";
+import TodoBackend from "@API/TodoBackend";
+import TodoMessage from "@components/TodoMessage";
 
+/**
+ * Компонент-страница для управления профилем пользователя
+ * 
+ * @returns {object} компонент-страница профиля пользователя
+ */
 const Profile = () => {
+
+    // формирование headers для отправки запроса на получение данных профиля
     const headers = authTokenHeadersGet();
 
+    const [modalActive, setModalActive] = useState(false);
+    const [message, setMessage] = useState("");
+
+    // управление состоянием с данными профиля
     const [profile, setProfile] = useState({});
 
+    /**
+     * Запрос к API на получение данных профиля 
+     */
     const fetchProfile = () => {
         TodoBackend.getProfile(
             headers
         ).then(
             response => {
                 if (response.status === 200) {
+
+                    // измененение состояния объекта с данными профиля
                     setProfile(response.data);
-                }
-                else {
-                    console.log(response);
                 };
             }
         ).catch(
             error => {
-                console.error(error);
+                setMessage(error.response.data.message);
+                setModalActive(true);
             }
         );
     };
 
+    // при помощи хука useEffect() данные профиля запрашиваются при каждой загрузке страницы
     useEffect(
         () => {
             fetchProfile();
@@ -35,6 +51,8 @@ const Profile = () => {
     return (
         <div className="mt-4">
             {headers.Authorization
+
+                // если пользователь аутентифицирован
                 ?
                 <div>
                     <h2>Profile</h2>
@@ -45,6 +63,8 @@ const Profile = () => {
                                 <th scope="col"></th>
                             </tr>
                         </thead>
+
+                        {/* таблица заполняется данными полученными по API */}
                         <tbody>
                             <tr>
                                 <td>username</td>
@@ -65,11 +85,15 @@ const Profile = () => {
                         </tbody>
                     </table>
                 </div>
+
+                // если пользователь не аутентифицирован
                 :
                 <h3 className="position-absolute top-50 start-50 translate-middle">
                     Please log in to manage your profile
                 </h3>
             }
+
+            <div><TodoMessage active={modalActive} setActive={setModalActive} message={message} /></div>
         </div>
     );
 };

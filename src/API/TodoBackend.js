@@ -1,9 +1,18 @@
 import axios from "axios";
 import { todoBackendEndpoints, todoBackendHost } from "@config/config";
 
+/**
+ * Вызов API-методов бэка
+ */
 export default class TodoBackend {
 
-    // auth
+    /**
+     * Аутентификация, получение токена аутентификации
+     * 
+     * @param {object} credentials креды для аутентификации 
+     * 
+     * @returns {object} ответ от бэка
+     */
     static async authTokenGet(credentials) {
         const response = await axios.post(
             `${todoBackendHost}${todoBackendEndpoints.authTokenGet}`,
@@ -12,6 +21,13 @@ export default class TodoBackend {
         return response;
     }
 
+    /**
+     * Логаут, деактивация токена аутентификации
+     *  
+     * @param {object} headers headers с которыми будет выполняться запрос
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async authTokenRemove(headers = {}) {
         const response = await axios.post(
             `${todoBackendHost}${todoBackendEndpoints.authTokenRemove}`,
@@ -21,6 +37,13 @@ export default class TodoBackend {
         return response;
     }
 
+    /**
+     * Регистрация нового пользователя
+     * 
+     * @param {object} credentials данные регистрируемого пользователя 
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async registration(credentials) {
         const response = await axios.post(
             `${todoBackendHost}${todoBackendEndpoints.registration}`,
@@ -29,7 +52,13 @@ export default class TodoBackend {
         return response;
     }
 
-    // user
+    /**
+     * Получение данных профиля пользователя
+     * 
+     * @param {object} headers headers с которыми будет выполняться запрос 
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async getProfile(headers = {}) {
         const response = await axios.get(
             `${todoBackendHost}${todoBackendEndpoints.profile}`,
@@ -38,7 +67,14 @@ export default class TodoBackend {
         return response;
     }
 
-    // todo
+    /**
+     * Создание todo
+     * 
+     * @param {object} headers headers с которыми будет выполняться запрос
+     * @param {object} todo данные создаваемого todo
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async addTodo(headers = {}, todo) {
         const response = await axios.post(
             `${todoBackendHost}${todoBackendEndpoints.addTodo}`,
@@ -48,6 +84,14 @@ export default class TodoBackend {
         return response;
     }
 
+    /**
+     * Удаление todo
+     * 
+     * @param {object} headers headers с которыми будет выполняться запрос 
+     * @param {string} pk pk удаляемого todo 
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async deleteTodo(headers = {}, pk) {
         const response = await axios.delete(
             `${todoBackendHost}${todoBackendEndpoints.deleteTodo}${pk}/`,
@@ -56,6 +100,13 @@ export default class TodoBackend {
         return response;
     }
 
+    /**
+     * Получение списка todo
+     * 
+     * @param {object} headers headers с которыми будет выполняться запрос 
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async getTodoList(headers = {}) {
         const response = await axios.get(
             `${todoBackendHost}${todoBackendEndpoints.getTodoList}`,
@@ -64,6 +115,14 @@ export default class TodoBackend {
         return response;
     }
 
+    /**
+     * Переключение флага готовности todo
+     * 
+     * @param {object} headers headers с которыми будет выполняться запрос 
+     * @param {object} todo данные переключаемого todo 
+     * 
+     * @returns {object} ответ от бэка 
+     */
     static async toggleTodo(headers = {}, todo) {
         todo.done = !todo.done;
 

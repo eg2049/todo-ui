@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import TodoMessage from "@components/TodoMessage";
 import { registration } from "@handlers/authHandlers";
 
+/**
+ * Компонент-страница с формой регистрации
+ * 
+ * @returns {object} компонент-страница с формой регистрации
+ */
 const Registration = () => {
+
+    const isAuth = useSelector(state => state.isAuth.isAuth);
 
     const defaultState = {
         email: "",
@@ -12,27 +20,43 @@ const Registration = () => {
         passwordConfirm: ""
     };
 
+    const [modalActive, setModalActive] = useState(false);
+    const [message, setMessage] = useState("");
     const [credentials, setCredetials] = useState(defaultState);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const isAuth = useSelector(state => state.isAuth.isAuth);
-
+    /**
+     * Проверка совпадения полей "Пароль" и "Подтверждение пароля"
+     * 
+     * @returns {bool} совпадают ли поля "Пароль" и "Подтверждение пароля"
+     */
     const passwordCheck = () => {
         return (credentials.password === credentials.passwordConfirm) ? true : false;
     };
 
+    /**
+     * Обработка события нажатия на клавишу "Зарегистрироваться"
+     * 
+     * @param {object} event сущность доступная при использовании слушателя onSubmit 
+     */
     const registrationStart = (event) => {
         event.preventDefault();
 
+        // проверка совпадают ли пароли
         const passwordMatch = passwordCheck();
 
-        passwordMatch
-            ?
-            registration(event, credentials, dispatch, navigate)
-            :
-            console.log("Passwords do not match!");
+        if (passwordMatch) {
+
+            registration(
+                credentials, dispatch, navigate, setMessage, setModalActive
+            );
+        }
+        else {
+            setMessage("Passwords do not match!");
+            setModalActive(true);
+        };
     };
 
     return (
@@ -119,6 +143,8 @@ const Registration = () => {
                     </button>
                 </form>
             }
+
+            <div><TodoMessage active={modalActive} setActive={setModalActive} message={message} /></div>
         </div>
     );
 };

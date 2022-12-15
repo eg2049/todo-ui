@@ -1,5 +1,14 @@
 import React from "react";
 
+/**
+ * Компонент строка поискового запроса
+ * 
+ * @param {object} param0 object сразу деструктурируется
+ * @param {string} filter поисковый запрос
+ * @param {function} setFilter управление состоянием запроса в поисковой строке 
+ * 
+ * @returns {object} компонент строка поискового запроса
+ */
 const TodoFilter = ({ filter, setFilter }) => {
 
     return (
