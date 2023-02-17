@@ -13,7 +13,7 @@ import { authTokenName, authTokenPrefix, todoUIEndpoints } from "@config/config"
  * 
  * @returns {Promise} ответ от API бэкэнда
  */
-export const authTokenGet = (credentials, dispatch, navigate, setMessage, setModalActive) => {
+export const authTokenGetRequest = (credentials, dispatch, navigate, setMessage, setModalActive) => {
 
     return TodoBackend.authTokenGet(
         credentials
@@ -45,14 +45,13 @@ export const authTokenGet = (credentials, dispatch, navigate, setMessage, setMod
  * Запрос к API на регистрацию нового пользователя
  * 
  * @param {object} credentials креды для регистрации 
- * @param {function} dispatch для проброса в authTokenGet(), 
- * @param {function} navigate для проброса в authTokenGet(), куда сделать редирект в случае усешной регистрации и логина
+ * @param {function} navigate для проброса в authTokenGetRequest(), куда сделать редирект в случае усешной регистрации и логина
  * @param {function} setMessage управление состоянием сообщения для модального окна 
  * @param {function} setModalActive управление состоянием активности модального окна
  * 
  * @returns {Promise} ответ от API бэкэнда
  */
-export const registration = (credentials, dispatch, navigate, setMessage, setModalActive) => {
+export const registrationRequest = (credentials, navigate, setMessage, setModalActive) => {
 
     return TodoBackend.registration(
         credentials
@@ -60,9 +59,48 @@ export const registration = (credentials, dispatch, navigate, setMessage, setMod
         response => {
             if (response.status === 201) {
 
-                // аутентификация в случае успешной регистрации
-                authTokenGet(credentials, dispatch, navigate, setMessage, setModalActive)
+                // // аутентификация в случае успешной регистрации
+                // authTokenGet(credentials, dispatch, navigate, setMessage, setModalActive)
+
+                // переход на страницу с сообщением о необходимости подтвердить акканут, в случае успешной регистрации
+                navigate(todoUIEndpoints.registrationSucceeded);
             };
+        }
+    ).catch(
+        error => {
+            setMessage(error.response.data.message);
+            setModalActive(true);
+        }
+    );
+};
+
+/**
+ * Запрос к API на подтверждение профиля пользователя
+ * 
+ * @param {object} body тело запроса 
+ * @param {function} dispatch для проброса в authTokenGetRequest(), изменение состояния в reducer-ax redux в случае успешной аутентификации
+ * @param {function} navigate для проброса в authTokenGetRequest(), куда сделать редирект в случае усешной регистрации и логина
+ * @param {function} setMessage управление состоянием сообщения для модального окна
+ * @param {function} setModalActive управление состоянием активности модального окна
+ * 
+ * @returns {Promise} ответ от API бэкэнда
+ */
+export const profileConfirmationRequest = (body, dispatch, navigate, setMessage, setModalActive) => {
+
+    return TodoBackend.profileConfirmation(
+        body
+    ).then(
+        response => {
+            if (response.status === 200) {
+
+                const credentials = {
+                    "username": response.data.username,
+                    "password": body.password
+                };
+
+                // аутентификация в случае успешного подтверждения аккаунта
+                authTokenGetRequest(credentials, dispatch, navigate, setMessage, setModalActive);
+            }
         }
     ).catch(
         error => {
@@ -127,5 +165,4 @@ export const authDispatch = (dispatch) => {
             ? dispatch(setAuthAction(true))
             : dispatch(setAuthAction(false))
     };
-
 };

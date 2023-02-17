@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authTokenGet } from "@handlers/authHandlers";
+import { authTokenGetRequest } from "@handlers/authHandlers";
 import TodoMessage from "@components/TodoMessage";
 
 /**
@@ -42,7 +42,7 @@ const Login = () => {
         // при нажатии на кнопку не будет выполняться type="submit" (обновление страницы и отправка данных на сервер)
         event.preventDefault();
 
-        authTokenGet(
+        authTokenGetRequest(
             credentials, dispatch, navigate, setMessage, setModalActive
         );
     };

@@ -2,7 +2,7 @@ import axios from "axios";
 import { todoBackendEndpoints, todoBackendHost } from "@config/config";
 
 /**
- * Вызов API-методов бэка
+ * Вызов API-методов бэка todo-backend
  */
 export default class TodoBackend {
 
@@ -48,6 +48,21 @@ export default class TodoBackend {
         const response = await axios.post(
             `${todoBackendHost}${todoBackendEndpoints.registration}`,
             credentials
+        );
+        return response;
+    }
+
+    /**
+     * Подтверэдение профиля пользователя
+     * 
+     * @param {object} body тело запроса
+     *  
+     * @returns {object} ответ от бэка 
+     */
+    static async profileConfirmation(body) {
+        const response = await axios.put(
+            `${todoBackendHost}${todoBackendEndpoints.profileConfirmation}`,
+            body
         );
         return response;
     }

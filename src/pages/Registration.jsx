@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TodoMessage from "@components/TodoMessage";
-import { registration } from "@handlers/authHandlers";
+import { registrationRequest } from "@handlers/authHandlers";
 
 /**
  * Компонент-страница с формой регистрации
@@ -15,26 +15,26 @@ const Registration = () => {
 
     const defaultState = {
         email: "",
-        username: "",
-        password: "",
-        passwordConfirm: ""
+        username: ""
+        // password: "",
+        // passwordConfirm: ""
     };
 
     const [modalActive, setModalActive] = useState(false);
     const [message, setMessage] = useState("");
     const [credentials, setCredetials] = useState(defaultState);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    /**
-     * Проверка совпадения полей "Пароль" и "Подтверждение пароля"
-     * 
-     * @returns {bool} совпадают ли поля "Пароль" и "Подтверждение пароля"
-     */
-    const passwordCheck = () => {
-        return (credentials.password === credentials.passwordConfirm) ? true : false;
-    };
+    // /**
+    //  * Проверка совпадения полей "Пароль" и "Подтверждение пароля"
+    //  * 
+    //  * @returns {bool} совпадают ли поля "Пароль" и "Подтверждение пароля"
+    //  */
+    // const passwordCheck = () => {
+    //     return (credentials.password === credentials.passwordConfirm) ? true : false;
+    // };
 
     /**
      * Обработка события нажатия на клавишу "Зарегистрироваться"
@@ -44,19 +44,23 @@ const Registration = () => {
     const registrationStart = (event) => {
         event.preventDefault();
 
-        // проверка совпадают ли пароли
-        const passwordMatch = passwordCheck();
+        registrationRequest(
+            credentials, navigate, setMessage, setModalActive
+        );
 
-        if (passwordMatch) {
+        // // проверка совпадают ли пароли
+        // const passwordMatch = passwordCheck();
 
-            registration(
-                credentials, dispatch, navigate, setMessage, setModalActive
-            );
-        }
-        else {
-            setMessage("Passwords do not match!");
-            setModalActive(true);
-        };
+        // if (passwordMatch) {
+
+        //     registrationRequest(
+        //         credentials, dispatch, navigate, setMessage, setModalActive
+        //     );
+        // }
+        // else {
+        //     setMessage("Passwords do not match!");
+        //     setModalActive(true);
+        // };
     };
 
     return (
@@ -104,7 +108,7 @@ const Registration = () => {
                         />
                     </div>
 
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label className="form-label">
                             Password
                         </label>
@@ -136,7 +140,7 @@ const Registration = () => {
                                 )
                             }
                         />
-                    </div>
+                    </div> */}
 
                     <button type="submit" className="btn btn-success">
                         Registration
