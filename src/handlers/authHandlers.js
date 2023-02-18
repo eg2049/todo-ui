@@ -57,7 +57,7 @@ export const registrationRequest = (credentials, navigate, setMessage, setModalA
         credentials
     ).then(
         response => {
-            if (response.status === 201) {
+            if (response.status === 200 || response.status === 201) {
 
                 // // аутентификация в случае успешной регистрации
                 // authTokenGet(credentials, dispatch, navigate, setMessage, setModalActive)
