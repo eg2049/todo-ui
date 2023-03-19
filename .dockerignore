@@ -22,6 +22,9 @@ README.md
 # webpack-bundle-analyzer
 stats.json
 
+# logs
+*.log
+
 # Jetbrains IDEA
 .idea/
 
