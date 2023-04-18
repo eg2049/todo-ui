@@ -21,15 +21,15 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                echo 'Clone...'
+        // stage('Clone') {
+        //     steps {
+        //         echo 'Clone...'
 
-                // git url: env.GIT_REPOSITORY
-                // git url: env.GIT_REPOSITORY, branch: env.GIT_BRANCH_NAME
-                git url: env.GIT_REPOSITORY, branch: env.GIT_BRANCH_NAME, credentialsId: env.GIT_CREDENTIALS
-            }
-        }
+        //         // git url: env.GIT_REPOSITORY
+        //         // git url: env.GIT_REPOSITORY, branch: env.GIT_BRANCH_NAME
+        //         git url: env.GIT_REPOSITORY, branch: env.GIT_BRANCH_NAME, credentialsId: env.GIT_CREDENTIALS
+        //     }
+        // }
 
         stage('Build') {
 
