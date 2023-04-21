@@ -5,6 +5,9 @@ const isDev = process.env.NODE_ENV === "development";
 // подключение path для дальнейшей работы
 const path = require("path");
 
+// для пробрасывания переменных в .js файлы при сборке
+const webpack = require("webpack");
+
 // плагин для очистки ранее собранных файлов, после того как собрались новые
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
@@ -76,6 +79,17 @@ const plugins = () => {
         new MiniCssExtractPlugin(
             {
                 filename: "[name].[contenthash].css"
+            }
+        ),
+
+        // пробрасывание переменных в .js файлы при сборке
+        new webpack.DefinePlugin(
+            {
+                "process.env": {
+
+                    // хост todo-backend
+                    TODO_BACKEND_HOST: JSON.stringify(process.env.TODO_BACKEND_HOST)
+                }
             }
         )
     ];

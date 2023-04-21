@@ -3,6 +3,13 @@
 # тогда все шаги которые идут после переданного шага выполняться не будут
 FROM node:19.0.1-buster AS build
 
+# docker build --build-arg TODO_BACKEND_HOST=http://localhost:8000 -t todo-ui:0.1.0 -f Dockerfile.prod .
+# получение переменных переданных в docker-compose.yaml build args
+ARG TODO_BACKEND_HOST
+
+# объявление переменных в контейнере до сборки исходников приложения
+ENV TODO_BACKEND_HOST=$TODO_BACKEND_HOST
+
 # создание рабочей директории в контейнере
 RUN mkdir /app
 
@@ -21,12 +28,6 @@ RUN npm install -g npm@9.1.2 --silent
 
 # установка зависимостей проекта
 RUN npm install --silent
-
-# # получение переменных переданных в docker-compose.yaml build args
-# ARG ARG_FROM_DOCKER_COMPOSE
-
-# # объявление переменных в контейнере до сборки исходников приложения
-# ENV ARG_FROM_DOCKER_COMPOSE = $ARG_FROM_DOCKER_COMPOSE
 
 # сборка приложения
 RUN npm run build
