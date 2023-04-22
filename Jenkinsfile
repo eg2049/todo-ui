@@ -39,7 +39,7 @@ pipeline {
 
                 // вторым аргументом передаётся относительный путь до Dockerfile, который нужно использовать 
                 script {
-                    dockerImage = docker.build("${DOCKER_REPOSITORY}/${SERVICE_NAME}:${VERSION}", "-f Dockerfile.prod .")
+                    dockerImage = docker.build("${DOCKER_REPOSITORY}/${SERVICE_NAME}:${VERSION}", "--build-arg TODO_BACKEND_HOST=${TODO_BACKEND_HOST} -f Dockerfile.prod .")
                 }
 
             }
